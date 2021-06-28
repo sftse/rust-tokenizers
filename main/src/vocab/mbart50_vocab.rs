@@ -61,33 +61,6 @@ pub struct MBart50Vocab {
     pub language_codes_bytes: HashSet<Vec<u8>>,
 }
 
-impl MBart50Vocab {
-    /// Returns the EOS token for MBart50 (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the SEP token for MBart50 (`</s>`)
-    pub fn sep_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the CLS token for MBart50 (`<s>`)
-    pub fn cls_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the MASK token for MBart50 (`<mask>`)
-    pub fn mask_value() -> &'static str {
-        "<mask>"
-    }
-
-    /// Returns the PAD token for MBart50 (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-}
-
 impl Vocab for MBart50Vocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -95,6 +68,30 @@ impl Vocab for MBart50Vocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("</s>")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("<mask>")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -130,9 +127,18 @@ impl Vocab for MBart50Vocab {
             }
         };
         let mut values = HashMap::new();
-        values.insert(MBart50Vocab::cls_value().to_owned(), values.len() as i64);
-        values.insert(MBart50Vocab::pad_value().to_owned(), values.len() as i64);
-        values.insert(MBart50Vocab::eos_value().to_owned(), values.len() as i64);
+        values.insert(
+            MBart50Vocab::cls_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
+        values.insert(
+            MBart50Vocab::pad_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
+        values.insert(
+            MBart50Vocab::eos_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
         values.insert(
             MBart50Vocab::unknown_value().to_owned(),
             values.len() as i64,
@@ -145,25 +151,28 @@ impl Vocab for MBart50Vocab {
             values.insert(language_code.to_string(), values.len() as i64);
         }
 
-        values.insert(MBart50Vocab::mask_value().to_owned(), values.len() as i64);
+        values.insert(
+            MBart50Vocab::mask_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
 
         let mut special_values = HashMap::new();
         let unknown_value = MBart50Vocab::unknown_value();
         MBart50Vocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let sep_value = MBart50Vocab::sep_value();
+        let sep_value = MBart50Vocab::sep_value().unwrap();
         MBart50Vocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
-        let eos_value = MBart50Vocab::eos_value();
+        let eos_value = MBart50Vocab::eos_value().unwrap();
         MBart50Vocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
-        let cls_value = MBart50Vocab::cls_value();
+        let cls_value = MBart50Vocab::cls_value().unwrap();
         MBart50Vocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let mask_value = MBart50Vocab::mask_value();
+        let mask_value = MBart50Vocab::mask_value().unwrap();
         MBart50Vocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
-        let pad_value = MBart50Vocab::pad_value();
+        let pad_value = MBart50Vocab::pad_value().unwrap();
         MBart50Vocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

@@ -51,38 +51,6 @@ pub struct XLMRobertaVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl XLMRobertaVocab {
-    /// Returns the BOS token for XLMRoBERTa (`<s>`)
-    pub fn bos_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the EOS token for XLMRoBERTa (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the SEP token for XLMRoBERTa (`</s>`)
-    pub fn sep_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the CLS token for XLMRoBERTa (`<s>`)
-    pub fn cls_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the MASK token for XLMRoBERTa (`<mask>`)
-    pub fn mask_value() -> &'static str {
-        "<mask>"
-    }
-
-    /// Returns the PAD token for XLMRoBERTa (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-}
-
 impl Vocab for XLMRobertaVocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -90,6 +58,30 @@ impl Vocab for XLMRobertaVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("</s>")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("<mask>")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -125,9 +117,18 @@ impl Vocab for XLMRobertaVocab {
             }
         };
         let mut values = HashMap::new();
-        values.insert(XLMRobertaVocab::cls_value().to_owned(), values.len() as i64);
-        values.insert(XLMRobertaVocab::pad_value().to_owned(), values.len() as i64);
-        values.insert(XLMRobertaVocab::eos_value().to_owned(), values.len() as i64);
+        values.insert(
+            XLMRobertaVocab::cls_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
+        values.insert(
+            XLMRobertaVocab::pad_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
+        values.insert(
+            XLMRobertaVocab::eos_value().unwrap().to_owned(),
+            values.len() as i64,
+        );
         values.insert(
             XLMRobertaVocab::unknown_value().to_owned(),
             values.len() as i64,
@@ -136,7 +137,7 @@ impl Vocab for XLMRobertaVocab {
             values.insert(piece.get_piece().to_owned(), values.len() as i64);
         }
         values.insert(
-            XLMRobertaVocab::mask_value().to_owned(),
+            XLMRobertaVocab::mask_value().unwrap().to_owned(),
             values.len() as i64,
         );
 
@@ -144,19 +145,19 @@ impl Vocab for XLMRobertaVocab {
         let unknown_value = XLMRobertaVocab::unknown_value();
         XLMRobertaVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let bos_value = XLMRobertaVocab::bos_value();
+        let bos_value = XLMRobertaVocab::bos_value().unwrap();
         XLMRobertaVocab::_register_as_special_value(bos_value, &values, &mut special_values)?;
 
-        let eos_value = XLMRobertaVocab::eos_value();
+        let eos_value = XLMRobertaVocab::eos_value().unwrap();
         XLMRobertaVocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
-        let cls_value = XLMRobertaVocab::cls_value();
+        let cls_value = XLMRobertaVocab::cls_value().unwrap();
         XLMRobertaVocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let mask_value = XLMRobertaVocab::mask_value();
+        let mask_value = XLMRobertaVocab::mask_value().unwrap();
         XLMRobertaVocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
-        let pad_value = XLMRobertaVocab::pad_value();
+        let pad_value = XLMRobertaVocab::pad_value().unwrap();
         XLMRobertaVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

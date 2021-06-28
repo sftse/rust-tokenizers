@@ -45,18 +45,6 @@ pub struct T5Vocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl T5Vocab {
-    /// Returns the EOS token for T5 (`<eos>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the PAD token for T5 (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-}
-
 impl Vocab for T5Vocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -64,6 +52,30 @@ impl Vocab for T5Vocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -107,10 +119,10 @@ impl Vocab for T5Vocab {
         let unknown_value = T5Vocab::unknown_value();
         T5Vocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let eos_value = T5Vocab::eos_value();
+        let eos_value = T5Vocab::eos_value().unwrap();
         T5Vocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
-        let pad_value = T5Vocab::pad_value();
+        let pad_value = T5Vocab::pad_value().unwrap();
         T5Vocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

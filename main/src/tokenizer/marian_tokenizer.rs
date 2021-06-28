@@ -214,7 +214,7 @@ impl Tokenizer<MarianVocab> for MarianTokenizer {
         }
         special_tokens_mask.push(1);
         token_segment_ids.push(1);
-        output.push(self.vocab.token_to_id(MarianVocab::eos_value()));
+        output.push(self.vocab.token_to_id(MarianVocab::eos_value().unwrap()));
         offsets.push(None);
         original_offsets.push(vec![]);
         mask.push(Mask::Special);

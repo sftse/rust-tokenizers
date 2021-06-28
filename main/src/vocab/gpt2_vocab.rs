@@ -43,18 +43,6 @@ pub struct Gpt2Vocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl Gpt2Vocab {
-    /// Returns the BOS token for GPT2 (`<|endoftext|>`)
-    pub fn bos_value() -> &'static str {
-        "<|endoftext|>"
-    }
-
-    /// Returns the EOS token for GPT2 (`<|endoftext|>`)
-    pub fn eos_value() -> &'static str {
-        "<|endoftext|>"
-    }
-}
-
 impl Vocab for Gpt2Vocab {
     fn unknown_value() -> &'static str {
         "<|endoftext|>"
@@ -62,6 +50,30 @@ impl Vocab for Gpt2Vocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<|endoftext|>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        None
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("<|endoftext|>")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("<|endoftext|>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -95,10 +107,10 @@ impl Vocab for Gpt2Vocab {
         let unknown_value = Gpt2Vocab::unknown_value();
         Gpt2Vocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let bos_value = Gpt2Vocab::bos_value();
+        let bos_value = Gpt2Vocab::bos_value().unwrap();
         Gpt2Vocab::_register_as_special_value(bos_value, &values, &mut special_values)?;
 
-        let eos_value = Gpt2Vocab::eos_value();
+        let eos_value = Gpt2Vocab::eos_value().unwrap();
         Gpt2Vocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);
@@ -138,6 +150,7 @@ impl Vocab for Gpt2Vocab {
 #[cfg(test)]
 mod tests {
     extern crate anyhow;
+
     use super::*;
     use std::io::Write;
 

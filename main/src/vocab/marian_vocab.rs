@@ -45,18 +45,6 @@ pub struct MarianVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl MarianVocab {
-    /// Returns the PAD token for Marian (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-
-    /// Returns the EOS token for Marian (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-}
-
 impl Vocab for MarianVocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -64,6 +52,30 @@ impl Vocab for MarianVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -98,10 +110,10 @@ impl Vocab for MarianVocab {
         let unknown_value = MarianVocab::unknown_value();
         MarianVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let pad_value = MarianVocab::pad_value();
+        let pad_value = MarianVocab::pad_value().unwrap();
         MarianVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
-        let eos_value = MarianVocab::eos_value();
+        let eos_value = MarianVocab::eos_value().unwrap();
         MarianVocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

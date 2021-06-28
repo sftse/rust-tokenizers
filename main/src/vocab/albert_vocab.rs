@@ -51,38 +51,6 @@ pub struct AlbertVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl AlbertVocab {
-    /// Returns the BOS token for Albert (`[CLS]`)
-    pub fn bos_value() -> &'static str {
-        "[CLS]"
-    }
-
-    /// Returns the EOS token for Albert (`[SEP]`)
-    pub fn eos_value() -> &'static str {
-        "[SEP]"
-    }
-
-    /// Returns the SEP token for Albert (`[SEP]`)
-    pub fn sep_value() -> &'static str {
-        "[SEP]"
-    }
-
-    /// Returns the CLS token for Albert (`[CLS]`)
-    pub fn cls_value() -> &'static str {
-        "[CLS]"
-    }
-
-    /// Returns the MASK token for Albert (`[MASK]`)
-    pub fn mask_value() -> &'static str {
-        "[MASK]"
-    }
-
-    /// Returns the PAD token for Albert (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-}
-
 impl Vocab for AlbertVocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -90,6 +58,29 @@ impl Vocab for AlbertVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+    fn sep_value() -> Option<&'static str> {
+        Some("[SEP]")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("[CLS]")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("[MASK]")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("[CLS]")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("[SEP]")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -134,22 +125,22 @@ impl Vocab for AlbertVocab {
         let unknown_value = AlbertVocab::unknown_value();
         AlbertVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let bos_value = AlbertVocab::bos_value();
+        let bos_value = AlbertVocab::bos_value().unwrap();
         AlbertVocab::_register_as_special_value(bos_value, &values, &mut special_values)?;
 
-        let eos_value = AlbertVocab::eos_value();
+        let eos_value = AlbertVocab::eos_value().unwrap();
         AlbertVocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
-        let cls_value = AlbertVocab::cls_value();
+        let cls_value = AlbertVocab::cls_value().unwrap();
         AlbertVocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let mask_value = AlbertVocab::mask_value();
+        let mask_value = AlbertVocab::mask_value().unwrap();
         AlbertVocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
-        let pad_value = AlbertVocab::pad_value();
+        let pad_value = AlbertVocab::pad_value().unwrap();
         AlbertVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
-        let sep_value = AlbertVocab::sep_value();
+        let sep_value = AlbertVocab::sep_value().unwrap();
         AlbertVocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

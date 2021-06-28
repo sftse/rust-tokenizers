@@ -186,7 +186,7 @@ impl Tokenizer<M2M100Vocab> for M2M100Tokenizer {
             token_segment_ids.push(0);
         }
         special_tokens_mask.push(1);
-        output.push(self.vocab.token_to_id(M2M100Vocab::eos_value()));
+        output.push(self.vocab.token_to_id(M2M100Vocab::eos_value().unwrap()));
         offsets.push(None);
         original_offsets.push(vec![]);
         mask.push(Mask::Special);

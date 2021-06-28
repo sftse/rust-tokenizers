@@ -47,38 +47,6 @@ pub struct RobertaVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl RobertaVocab {
-    /// Returns the PAD token for RoBERTa (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-
-    /// Returns the BOS token for RoBERTa (`<s>`)
-    pub fn bos_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the EOS token for RoBERTa (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the SEP token for RoBERTa (`</s>`)
-    pub fn sep_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the CLS token for RoBERTa (`<s>`)
-    pub fn cls_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the MASK token for RoBERTa (`<mask>`)
-    pub fn mask_value() -> &'static str {
-        "<mask>"
-    }
-}
-
 impl Vocab for RobertaVocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -86,6 +54,30 @@ impl Vocab for RobertaVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("</s>")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("<mask>")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -120,22 +112,22 @@ impl Vocab for RobertaVocab {
         let unknown_value = RobertaVocab::unknown_value();
         RobertaVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let pad_value = RobertaVocab::pad_value();
+        let pad_value = RobertaVocab::pad_value().unwrap();
         RobertaVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
-        let sep_value = RobertaVocab::sep_value();
+        let sep_value = RobertaVocab::sep_value().unwrap();
         RobertaVocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
-        let cls_value = RobertaVocab::cls_value();
+        let cls_value = RobertaVocab::cls_value().unwrap();
         RobertaVocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let mask_value = RobertaVocab::mask_value();
+        let mask_value = RobertaVocab::mask_value().unwrap();
         RobertaVocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
-        let bos_value = RobertaVocab::bos_value();
+        let bos_value = RobertaVocab::bos_value().unwrap();
         RobertaVocab::_register_as_special_value(bos_value, &values, &mut special_values)?;
 
-        let eos_value = RobertaVocab::eos_value();
+        let eos_value = RobertaVocab::eos_value().unwrap();
         RobertaVocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

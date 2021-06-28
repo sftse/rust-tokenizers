@@ -45,13 +45,6 @@ pub struct ReformerVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl ReformerVocab {
-    /// Returns the EOS token for the Reformer (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-}
-
 impl Vocab for ReformerVocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -59,6 +52,30 @@ impl Vocab for ReformerVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        None
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -103,7 +120,7 @@ impl Vocab for ReformerVocab {
         let unknown_value = ReformerVocab::unknown_value();
         ReformerVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let eos_value = ReformerVocab::eos_value();
+        let eos_value = ReformerVocab::eos_value().unwrap();
         ReformerVocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

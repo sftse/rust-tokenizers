@@ -44,29 +44,9 @@ pub struct ProphetNetVocab {
 }
 
 impl ProphetNetVocab {
-    /// Returns the PAD token for ProphetNet (`[PAD]`)
-    pub fn pad_value() -> &'static str {
-        "[PAD]"
-    }
-
-    /// Returns the CLS token for ProphetNet (`[CLS]`)
-    pub fn cls_value() -> &'static str {
-        "[CLS]"
-    }
-
-    /// Returns the SEP token for ProphetNet (`[SEP]`)
-    pub fn sep_value() -> &'static str {
-        "[SEP]"
-    }
-
     /// Returns the X_SEP token for ProphetNet (`[X_SEP]`)
     pub fn x_sep_value() -> &'static str {
         "[X_SEP]"
-    }
-
-    /// Returns the MASK token for ProphetNet (`[MASK]`)
-    pub fn mask_value() -> &'static str {
-        "[MASK]"
     }
 }
 
@@ -77,6 +57,30 @@ impl Vocab for ProphetNetVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "[UNK]"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("[PAD]")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("[SEP]")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("[CLS]")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("[MASK]")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        None
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -102,16 +106,16 @@ impl Vocab for ProphetNetVocab {
         let unknown_value = ProphetNetVocab::unknown_value();
         ProphetNetVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let pad_value = ProphetNetVocab::pad_value();
+        let pad_value = ProphetNetVocab::pad_value().unwrap();
         ProphetNetVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
-        let cls_value = ProphetNetVocab::cls_value();
+        let cls_value = ProphetNetVocab::cls_value().unwrap();
         ProphetNetVocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let sep_value = ProphetNetVocab::sep_value();
+        let sep_value = ProphetNetVocab::sep_value().unwrap();
         ProphetNetVocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
-        let mask_value = ProphetNetVocab::mask_value();
+        let mask_value = ProphetNetVocab::mask_value().unwrap();
         ProphetNetVocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

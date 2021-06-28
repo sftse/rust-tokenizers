@@ -43,28 +43,6 @@ pub struct BertVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl BertVocab {
-    /// Returns the PAD token for BERT (`[PAD]`)
-    pub fn pad_value() -> &'static str {
-        "[PAD]"
-    }
-
-    /// Returns the SEP token for BERT (`[SEP]`)
-    pub fn sep_value() -> &'static str {
-        "[SEP]"
-    }
-
-    /// Returns the CLS token for BERT (`[CLS]`)
-    pub fn cls_value() -> &'static str {
-        "[CLS]"
-    }
-
-    /// Returns the MASK token for BERT (`[MASK]`)
-    pub fn mask_value() -> &'static str {
-        "[MASK]"
-    }
-}
-
 impl Vocab for BertVocab {
     fn unknown_value() -> &'static str {
         "[UNK]"
@@ -72,6 +50,30 @@ impl Vocab for BertVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "[UNK]"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("[PAD]")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("[SEP]")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("[CLS]")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("[MASK]")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        None
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -97,16 +99,16 @@ impl Vocab for BertVocab {
         let unknown_value = BertVocab::unknown_value();
         BertVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let pad_value = BertVocab::pad_value();
+        let pad_value = BertVocab::pad_value().unwrap();
         BertVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
-        let sep_value = BertVocab::sep_value();
+        let sep_value = BertVocab::sep_value().unwrap();
         BertVocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
-        let cls_value = BertVocab::cls_value();
+        let cls_value = BertVocab::cls_value().unwrap();
         BertVocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let mask_value = BertVocab::mask_value();
+        let mask_value = BertVocab::mask_value().unwrap();
         BertVocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

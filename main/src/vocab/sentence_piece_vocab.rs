@@ -49,38 +49,6 @@ pub struct SentencePieceVocab {
     pub special_indices: HashMap<i64, String>,
 }
 
-impl SentencePieceVocab {
-    /// Returns the PAD token for SentencePiece (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-
-    /// Returns the SEP token for SentencePiece (`<sep>`)
-    pub fn sep_value() -> &'static str {
-        "<sep>"
-    }
-
-    /// Returns the CLS token for SentencePiece (`<cls>`)
-    pub fn cls_value() -> &'static str {
-        "<cls>"
-    }
-
-    /// Returns the MASK token for SentencePiece (`<mask>`)
-    pub fn mask_value() -> &'static str {
-        "<mask>"
-    }
-
-    /// Returns the BOS token for SentencePiece (`<s>`)
-    pub fn bos_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the EOS token for SentencePiece (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-}
-
 impl Vocab for SentencePieceVocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -88,6 +56,30 @@ impl Vocab for SentencePieceVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("<sep>")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("<cls>")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("<mask>")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {

@@ -156,7 +156,7 @@ impl Tokenizer<MBart50Vocab> for MBart50Tokenizer {
         special_tokens_mask.push(1);
         token_segment_ids.extend(vec![0; tokens_ids_with_offsets_1.ids.len() + 1]);
         output.extend(tokens_ids_with_offsets_1.ids);
-        output.push(self.vocab.token_to_id(MBart50Vocab::sep_value()));
+        output.push(self.vocab.token_to_id(MBart50Vocab::sep_value().unwrap()));
         offsets.extend(tokens_ids_with_offsets_1.offsets);
         if !offsets.is_empty() {
             offsets[0] = None;
@@ -178,7 +178,7 @@ impl Tokenizer<MBart50Vocab> for MBart50Tokenizer {
             special_tokens_mask.push(1);
             token_segment_ids.extend(vec![1; length + 1]);
             output.extend(tokens_ids_with_offsets_2_value.ids);
-            output.push(self.vocab.token_to_id(MBart50Vocab::sep_value()));
+            output.push(self.vocab.token_to_id(MBart50Vocab::sep_value().unwrap()));
             offsets.extend(tokens_ids_with_offsets_2_value.offsets);
             offsets.push(None);
             original_offsets.extend(tokens_ids_with_offsets_2_value.reference_offsets);

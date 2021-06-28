@@ -33,6 +33,29 @@ pub trait Vocab {
     /// Returns the unknown value on an instance
     fn get_unknown_value(&self) -> &'static str;
 
+    /// Associative function returning the padding value for the vocabulary
+    fn pad_value() -> Option<&'static str>;
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        None
+    }
+
     /// Return the map of token strings to IDs
     fn values(&self) -> &HashMap<String, i64>;
 
@@ -222,6 +245,30 @@ impl Vocab for BaseVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "[UNK]"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        None
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        None
     }
 
     fn values(&self) -> &HashMap<String, i64> {

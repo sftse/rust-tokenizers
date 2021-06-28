@@ -49,24 +49,9 @@ pub struct PegasusVocab {
 }
 
 impl PegasusVocab {
-    /// Returns the EOS token for Pegasus (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the MASK token for Pegasus (`<mask_2>`)
-    pub fn mask_value() -> &'static str {
-        "<mask_2>"
-    }
-
     /// Returns the MASK token for Pegasus (`<mask_1>`)
     pub fn mask_sent_value() -> &'static str {
         "<mask_1>"
-    }
-
-    /// Returns the PAD token for Pegasus (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
     }
 }
 
@@ -90,6 +75,30 @@ impl Vocab for PegasusVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("<mask_2>")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -132,7 +141,7 @@ impl Vocab for PegasusVocab {
         let mut offset = 0_i64;
 
         // pad value
-        let pad_value = PegasusVocab::pad_value();
+        let pad_value = PegasusVocab::pad_value().unwrap();
         offset = PegasusVocab::_add_and_register_special_value(
             &mut values,
             &mut special_values,
@@ -141,7 +150,7 @@ impl Vocab for PegasusVocab {
         )?;
 
         // EOS value
-        let eos_value = PegasusVocab::eos_value();
+        let eos_value = PegasusVocab::eos_value().unwrap();
         offset = PegasusVocab::_add_and_register_special_value(
             &mut values,
             &mut special_values,
@@ -150,7 +159,7 @@ impl Vocab for PegasusVocab {
         )?;
 
         // Mask value
-        let mask_value = PegasusVocab::mask_value();
+        let mask_value = PegasusVocab::mask_value().unwrap();
         offset = PegasusVocab::_add_and_register_special_value(
             &mut values,
             &mut special_values,

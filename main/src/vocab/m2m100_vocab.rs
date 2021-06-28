@@ -59,28 +59,6 @@ pub struct M2M100Vocab {
     pub language_codes_bytes: HashSet<Vec<u8>>,
 }
 
-impl M2M100Vocab {
-    /// Returns the BOS token for M2M100 (`<s>`)
-    pub fn bos_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the EOS token for M2M100 (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the SEP token for M2M100 (`</s>`)
-    pub fn sep_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the PAD token for M2M100 (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-}
-
 impl Vocab for M2M100Vocab {
     fn unknown_value() -> &'static str {
         "<unk>"
@@ -88,6 +66,30 @@ impl Vocab for M2M100Vocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("</s>")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -137,16 +139,16 @@ impl Vocab for M2M100Vocab {
         let unknown_value = M2M100Vocab::unknown_value();
         M2M100Vocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let sep_value = M2M100Vocab::sep_value();
+        let sep_value = M2M100Vocab::sep_value().unwrap();
         M2M100Vocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
-        let bos_value = M2M100Vocab::bos_value();
+        let bos_value = M2M100Vocab::bos_value().unwrap();
         M2M100Vocab::_register_as_special_value(bos_value, &values, &mut special_values)?;
 
-        let eos_value = M2M100Vocab::eos_value();
+        let eos_value = M2M100Vocab::eos_value().unwrap();
         M2M100Vocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
-        let pad_value = M2M100Vocab::pad_value();
+        let pad_value = M2M100Vocab::pad_value().unwrap();
         M2M100Vocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
         let indices = swap_key_values(&values);

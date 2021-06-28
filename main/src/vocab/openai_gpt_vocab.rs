@@ -49,6 +49,30 @@ impl Vocab for OpenAiGptVocab {
         "<unk>"
     }
 
+    fn pad_value() -> Option<&'static str> {
+        None
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        None
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        None
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        None
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        None
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        None
+    }
+
     fn values(&self) -> &HashMap<String, i64> {
         &self.values
     }

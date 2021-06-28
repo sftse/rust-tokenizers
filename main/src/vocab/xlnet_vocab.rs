@@ -53,36 +53,6 @@ pub struct XLNetVocab {
 }
 
 impl XLNetVocab {
-    /// Returns the BOS token for XLNet (`<s>`)
-    pub fn bos_value() -> &'static str {
-        "<s>"
-    }
-
-    /// Returns the EOS token for XLNet (`</s>`)
-    pub fn eos_value() -> &'static str {
-        "</s>"
-    }
-
-    /// Returns the SEP token for XLNet (`<sep>`)
-    pub fn sep_value() -> &'static str {
-        "<sep>"
-    }
-
-    /// Returns the CLS token for XLNet (`<cls>`)
-    pub fn cls_value() -> &'static str {
-        "<cls>"
-    }
-
-    /// Returns the MASK token for XLNet (`<mask>`)
-    pub fn mask_value() -> &'static str {
-        "<mask>"
-    }
-
-    /// Returns the PAD token for XLNet (`<pad>`)
-    pub fn pad_value() -> &'static str {
-        "<pad>"
-    }
-
     /// Returns the EOP token for XLNet (`<eop>`)
     pub fn eop_value() -> &'static str {
         "<eop>"
@@ -101,6 +71,30 @@ impl Vocab for XLNetVocab {
 
     fn get_unknown_value(&self) -> &'static str {
         "<unk>"
+    }
+
+    fn pad_value() -> Option<&'static str> {
+        Some("<pad>")
+    }
+
+    fn sep_value() -> Option<&'static str> {
+        Some("<sep>")
+    }
+
+    fn cls_value() -> Option<&'static str> {
+        Some("<cls>")
+    }
+
+    fn mask_value() -> Option<&'static str> {
+        Some("<mask>")
+    }
+
+    fn bos_value() -> Option<&'static str> {
+        Some("<s>")
+    }
+
+    fn eos_value() -> Option<&'static str> {
+        Some("</s>")
     }
 
     fn values(&self) -> &HashMap<String, i64> {
@@ -145,22 +139,22 @@ impl Vocab for XLNetVocab {
         let unknown_value = XLNetVocab::unknown_value();
         XLNetVocab::_register_as_special_value(unknown_value, &values, &mut special_values)?;
 
-        let bos_value = XLNetVocab::bos_value();
+        let bos_value = XLNetVocab::bos_value().unwrap();
         XLNetVocab::_register_as_special_value(bos_value, &values, &mut special_values)?;
 
-        let eos_value = XLNetVocab::eos_value();
+        let eos_value = XLNetVocab::eos_value().unwrap();
         XLNetVocab::_register_as_special_value(eos_value, &values, &mut special_values)?;
 
-        let cls_value = XLNetVocab::cls_value();
+        let cls_value = XLNetVocab::cls_value().unwrap();
         XLNetVocab::_register_as_special_value(cls_value, &values, &mut special_values)?;
 
-        let mask_value = XLNetVocab::mask_value();
+        let mask_value = XLNetVocab::mask_value().unwrap();
         XLNetVocab::_register_as_special_value(mask_value, &values, &mut special_values)?;
 
-        let pad_value = XLNetVocab::pad_value();
+        let pad_value = XLNetVocab::pad_value().unwrap();
         XLNetVocab::_register_as_special_value(pad_value, &values, &mut special_values)?;
 
-        let sep_value = XLNetVocab::sep_value();
+        let sep_value = XLNetVocab::sep_value().unwrap();
         XLNetVocab::_register_as_special_value(sep_value, &values, &mut special_values)?;
 
         let eop_value = XLNetVocab::eop_value();
